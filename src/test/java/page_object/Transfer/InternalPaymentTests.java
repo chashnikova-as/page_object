@@ -24,7 +24,7 @@ public class InternalPaymentTests {
         String cardTo = "5559000000000001";
         int sum = 100;
         transferSuccess(cardTo, sum);
-        
+
         cardTo = "5559000000000002";
         sum = 75;
         transferSuccess(cardTo, sum);
