@@ -1,9 +1,8 @@
-package page_object.Login;
+package page_object.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import page_object.DataHelper;
-import page_object.Transfer.CardsPage;
+import page_object.tests_data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
 

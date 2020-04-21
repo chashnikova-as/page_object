@@ -1,8 +1,8 @@
-package page_object.Transfer;
+package page_object.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import page_object.Card;
+import page_object.models.Card;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;

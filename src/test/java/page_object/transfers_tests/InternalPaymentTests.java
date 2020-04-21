@@ -1,11 +1,13 @@
-package page_object.Transfer;
+package page_object.transfers_tests;
 
 import org.junit.jupiter.api.Test;
-import page_object.Card;
-import page_object.Client;
-import page_object.DataHelper;
-import page_object.Login.ConfirmPage;
-import page_object.Login.LoginPage;
+import page_object.models.Card;
+import page_object.models.User;
+import page_object.tests_data.DataHelper;
+import page_object.pages.AddMoneyPage;
+import page_object.pages.CardsPage;
+import page_object.pages.ConfirmPage;
+import page_object.pages.LoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,32 +22,21 @@ public class InternalPaymentTests {
     private static AddMoneyPage addMoneyPage = new AddMoneyPage();
 
     @Test
-    void transferFromAllCards() {
-        String cardTo = "5559000000000001";
-        int sum = 100;
-        transferSuccess(cardTo, sum);
+    void transferSuccess() {
+        User user = dataHelper.getUser();
+        Card cardFrom = dataHelper.getFirstCard();
+        Card cardTo = dataHelper.getSecondCard();
+        int sum = dataHelper.rnd(1,100);
 
-        cardTo = "5559000000000002";
-        sum = 75;
-        transferSuccess(cardTo, sum);
-    }
-
-
-    private void transferSuccess(String fullCardNumberTo, int sum) {
-        //тестовые данные
-        Client client = dataHelper.getClient();
-//        int lastDigit = dataHelper.rnd(1, 2);
-        Card cardTo = client.getCards().get(fullCardNumberTo);
-        Card cardFrom = client.returnAnotherCard(fullCardNumberTo);
-
-        loginPage.loginSuccess(client);
-
+        loginPage.loginSuccess(user);
         confirmPage.inputCodeSuccess();
+
 
         int CardFromAmountBefore = cardsPage.getActualCardBalance(cardFrom);
         int CardToAmountBefore = cardsPage.getActualCardBalance(cardTo);
+
         cardsPage.initTransferSuccess(cardTo, sum);
-        addMoneyPage.transferSuccess(cardFrom, cardTo, sum);
+        addMoneyPage.transferSuccess(cardFrom, sum);
 
         assertEquals(CardFromAmountBefore - sum, (cardsPage.getActualCardBalance(cardFrom)), "Баланс карты списания изменился неправильно");
         assertEquals(CardToAmountBefore + sum, (cardsPage.getActualCardBalance(cardTo)), "Баланс карты зачисления изменился неправильно");
